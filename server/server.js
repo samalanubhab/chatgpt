@@ -9,7 +9,7 @@ import {
 } from 'openai'
 import {
     cosineSimilarity
-} from './cosineSimilarity'
+} from '../cosineSimilarity'
 
 dotenv.config()
 
