@@ -8,7 +8,7 @@ import {
 } from 'openai'
 
 
-import cosineSimilarity from 'cosineSimilarity';
+import {cosineSimilarity} from './cosineSimilarity.js';
 
 dotenv.config()
 
