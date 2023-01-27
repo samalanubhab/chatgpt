@@ -4,8 +4,7 @@ import cors from 'cors'
 import xlsx from 'xlsx'
 import {
     Configuration,
-    OpenAIApi,
-    Embedding
+    OpenAIApi
 } from 'openai'
 
 const cosineSimilarity = require('./cosineSimilarity');
@@ -35,7 +34,7 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]]
         const data = xlsx.utils.sheet_to_json(sheet)
         // Compute the query embedding using the OpenAI API
-        const output = await Embedding.create({
+        const output = await openai.Embedding.create({
             model: process.env.EMBED_MODEL,
             prompt: `$ {
                 query
