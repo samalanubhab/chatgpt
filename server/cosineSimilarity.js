@@ -1,4 +1,4 @@
-exports.cosineSimilarity = function(v1, v2) {
+ function cosineSimilarity(v1, v2) {
     // Check if vectors have the same length
     if (v1.length !== v2.length) {
         throw new Error('Vectors must have the same length');
@@ -23,3 +23,4 @@ exports.cosineSimilarity = function(v1, v2) {
     // Calculate cosine similarity
     return dotProduct / (v1Magnitude * v2Magnitude);
 }
+export {cosineSimilarity};
