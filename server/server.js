@@ -30,8 +30,8 @@ app.post('/', async (req, res) => {
         const output = await openai.createEmbedding({
             model: process.env.EMBED_MODEL,
             input: `${query}`
-        })
-        const queryEmbedding=output["data"][0]["embedding"]
+        });
+        const queryEmbedding = output.data[0].embedding
         console.log(queryEmbedding)
         
         const prompt1 = `abc`;
