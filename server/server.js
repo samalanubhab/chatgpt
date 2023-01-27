@@ -31,7 +31,7 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data[0].embedding
+        const queryEmbedding = output
         console.log(queryEmbedding)
         
         const prompt1 = `abc`;
