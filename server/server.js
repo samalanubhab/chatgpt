@@ -31,13 +31,27 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output
-        console.log(queryEmbedding)
+        const queryEmbedding = output.data.embedding;
+                
+        const workbook = xlsx.readFile('./document_embeddings.xlsx')
+        const sheet = workbook.Sheets[workbook.SheetNames[0]]
+        const data = xlsx.utils.sheet_to_json(sheet)
+        let similarities = []
+        data.forEach(d => {
+            const documentEmbedding = d.embeddings
+            const similarity = cosineSimilarity(queryEmbedding, documentEmbedding)
+            similarities.push({
+                similarity,
+                context: d.context
+            })
+        })        
+        similarities.sort((a, b) => b.similarity - a.similarity)
         
-        const prompt1 = `abc`;
+        const topMatchingContext = similarities[0].context
+        const prompt1 = topMatchingContext
         
       
-        const newPrompt = `Context: ${prompt1}\n${query}`;
+        const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
         
         console.log(newPrompt)
         const response = await openai.createCompletion({
