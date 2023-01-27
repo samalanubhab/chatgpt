@@ -32,11 +32,15 @@ app.post('/', async (req, res) => {
             input: `${query}`
         });
         const queryEmbedding = output.data.embedding;
+        
+
                 
-        const workbook = xlsx.readFile('./document_embeddings.xlsx')
-        const sheet = workbook.Sheets[workbook.SheetNames[0]]
-        const data = xlsx.utils.sheet_to_json(sheet)
-        let similarities = []
+        const workbook = xlsx.readFile('./document_embeddings.xlsx');
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = xlsx.utils.sheet_to_json(sheet);
+        console.log(data);
+        
+        let similarities = [];
         data.forEach(d => {
             const documentEmbedding = d.embeddings
             const similarity = cosineSimilarity(queryEmbedding, documentEmbedding)
@@ -44,11 +48,11 @@ app.post('/', async (req, res) => {
                 similarity,
                 context: d.context
             })
-        })        
-        similarities.sort((a, b) => b.similarity - a.similarity)
+        });      
+        similarities.sort((a, b) => b.similarity - a.similarity);
         
-        const topMatchingContext = similarities[0].context
-        const prompt1 = topMatchingContext
+        const topMatchingContext = similarities[0].context;
+        const prompt1 = topMatchingContext;
         
       
         const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
