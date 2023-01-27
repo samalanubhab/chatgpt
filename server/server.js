@@ -7,7 +7,9 @@ import {
     OpenAIApi
 } from 'openai'
 
-const cosineSimilarity = require('./cosineSimilarity');
+
+import cosineSimilarity from 'cosineSimilarity';
+
 dotenv.config()
 
 const configuration = new Configuration({
