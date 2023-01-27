@@ -39,9 +39,9 @@ app.post('/', async (req, res) => {
         // Compute the query embedding using the OpenAI API
         const output = await Embedding.create({
             model: process.env.EMBED_MODEL,
-            prompt: $ {
+            prompt: `$ {
                 query
-            },
+            }`,
         })
         const queryEmbedding=ouput["data"][0]["embedding"]
         // Compare the cosine similarity between the query embedding and document embeddings
@@ -60,12 +60,8 @@ app.post('/', async (req, res) => {
         const topMatchingContext = similarities[0].context
         const prompt1 = topMatchingContext
         // Create a new prompt with prompt1 appended at the beginning of the query prompt
-        const newPrompt = $ {
-            prompt1
-        }
-        $ {
-            query
-        }
+      
+        const newPrompt = `Context: ${prompt1}\n${query}`;
         // call openai.CreateCompletion and send the response text as bot
         const response = await openai.createCompletion({
 
