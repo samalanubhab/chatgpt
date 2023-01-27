@@ -37,12 +37,13 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]]
         const data = xlsx.utils.sheet_to_json(sheet)
         // Compute the query embedding using the OpenAI API
-        const queryEmbedding = await Embedding.create({
+        const output = await Embedding.create({
             model: process.env.EMBED_MODEL,
             prompt: $ {
                 query
             },
         })
+        const queryEmbedding=ouput["data"][0]["embedding"]
         // Compare the cosine similarity between the query embedding and document embeddings
         let similarities = []
         data.forEach(d => {
