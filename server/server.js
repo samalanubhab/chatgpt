@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
 import xlsx from 'xlsx'
-import {cosineSimilarity} from './cosineSimilarity.js';
+import {cosineSimilarity} from './cosineSimilarity.js'
 
 dotenv.config()
 
@@ -26,31 +26,8 @@ app.post('/', async (req, res) => {
     try {
         const query = req.body.prompt;
         
-        console.log(query);
-        const workbook = xlsx.readFile('./document_embeddings.xlsx')
-        const sheet = workbook.Sheets[workbook.SheetNames[0]]
-        const data = xlsx.utils.sheet_to_json(sheet)
-        
-        const output = await openai.Embedding.create({
-            model: process.env.EMBED_MODEL,
-            prompt: `${query}`
-        })
-        const queryEmbedding=output["data"][0]["embedding"]
-        
-        let similarities = []
-        data.forEach(d => {
-            const documentEmbedding = d.embeddings
-            const similarity = cosineSimilarity(queryEmbedding, documentEmbedding)
-            similarities.push({
-                similarity,
-                context: d.context
-            })
-        })
-        
-        similarities.sort((a, b) => b.similarity - a.similarity)
-        
-        const topMatchingContext = similarities[0].context
-        const prompt1 = topMatchingContext
+    
+        const prompt1 = `abc`;
         
       
         const newPrompt = `Context: ${prompt1}\n${query}`;
