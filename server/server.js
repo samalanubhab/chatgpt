@@ -32,6 +32,7 @@ app.post('/', async (req, res) => {
             input: `${query}`
         });
         const queryEmbedding = output.data.embedding;
+        console.log(queryEmbedding);
         
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
