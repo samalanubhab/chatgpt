@@ -31,7 +31,7 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data.embedding;
+        const queryEmbedding = output.data.data;
         console.log(queryEmbedding);
         
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
