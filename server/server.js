@@ -7,10 +7,8 @@ import {
     OpenAIApi,
     Embedding
 } from 'openai'
-import {
-    cosineSimilarity
-} from '../cosineSimilarity'
 
+const cosineSimilarity = require('./cosineSimilarity');
 dotenv.config()
 
 const configuration = new Configuration({
