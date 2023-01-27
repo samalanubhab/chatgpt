@@ -32,6 +32,7 @@ app.post('/', async (req, res) => {
     try {
         const query = req.body.prompt;
         // Read in the document embeddings excel file
+        console.log(query);
         const workbook = xlsx.readFile('./document_embeddings.xlsx')
         const sheet = workbook.Sheets[workbook.SheetNames[0]]
         const data = xlsx.utils.sheet_to_json(sheet)
@@ -42,7 +43,7 @@ app.post('/', async (req, res) => {
                 query
             }`,
         })
-        const queryEmbedding=ouput["data"][0]["embedding"]
+        const queryEmbedding=output["data"][0]["embedding"]
         // Compare the cosine similarity between the query embedding and document embeddings
         let similarities = []
         data.forEach(d => {
@@ -62,6 +63,7 @@ app.post('/', async (req, res) => {
       
         const newPrompt = `Context: ${prompt1}\n${query}`;
         // call openai.CreateCompletion and send the response text as bot
+        console.log(newPrompt)
         const response = await openai.createCompletion({
 
             model: process.env.MODEL,
