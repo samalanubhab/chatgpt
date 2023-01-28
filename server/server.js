@@ -32,27 +32,22 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data.data[0].embedding;               
+        const queryEmbedding = output.data.data[0].embedding; 
         
         let jsonData;
-        var topKey;
-        
-        fs.readFile('embeddings.json', (err, data) => {
-            if (err) throw err;
-            jsonData = JSON.parse(data);
-            let dotProducts = Object.keys(jsonData).map(function(key) {
-                    return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
-                });
-            
-            dotProducts.sort(function(a, b) {
-                return b.dotProduct - a.dotProduct;
-            });
-            
-            topKey = dotProducts[0].key;
-                        
-        });
-        console.log("The value of retrieved key outside loop is " +topKey);
+        const readFile = util.promisify(fs.readFile);
+        const jsonData = await readFile('embeddings.json', 'utf8');
+        let dotProducts = Object.keys(jsonData).map(function(key) {
+                        return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
+                    });
 
+        dotProducts.sort(function(a, b) {
+            return b.dotProduct - a.dotProduct;
+        });
+
+        topKey = dotProducts[0].key;
+        console.log("The value of retrieved key outside loop is " +topKey);
+        
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);
