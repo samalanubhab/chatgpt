@@ -31,19 +31,13 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data.data.embedding;
+        const queryEmbedding = output.data.data[0].embedding;
         console.log(queryEmbedding);
         
-        const workbook = xlsx.readFile('./document_embeddings.xlsx');
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data = xlsx.utils.sheet_to_json(sheet);
-        data.forEach(row => {
-          row.similarity = math.dot(queryEmbedding, row.embeddings);
-        });
-        data.sort((a, b) => b.similarity - a.similarity);
+        
               
 
-        const prompt1 = data[0].context;
+        const prompt1 = `abc`
         console.log(prompt1);
         
       
