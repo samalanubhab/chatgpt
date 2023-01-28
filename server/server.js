@@ -4,6 +4,7 @@ import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
 import xlsx from 'xlsx'
 import math from 'mathjs'
+import fs from 'fs'
 
 dotenv.config()
 
