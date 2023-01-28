@@ -51,16 +51,19 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet); 
         
-        let context;
+        
         function getContext(jsonSheet, topKey) {
+            let context;
             if(jsonSheet.length > 0){
                 for (let i = 0; i < jsonSheet.length; i++) {
                     if (Number(jsonSheet[i].number) === Number(topKey)) {
                         context = jsonSheet[i].context;
+                        console.log("The fetched context inside is :-"+ context)
                         break;
                     }
                 }
             }
+            console.log("The fetched context outside is :-"+ context)
             let newPrompt;
             if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
                 newPrompt = `Context: ${context}\n Question: ${query}\n`;
