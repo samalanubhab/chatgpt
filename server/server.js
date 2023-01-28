@@ -31,15 +31,18 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data.data[0].embedding;
-        console.log(queryEmbedding);
+        const queryEmbedding = output.data.data[0].embedding;               
         
+        fs.readFile('embeddings.json', (err, data) => {
+          if (err) throw err;
+          let jsonData = JSON.parse(data);
+          console.log(jsonData);
+        }); 
         
               
 
         const prompt1 = `abc`
-        console.log(prompt1);
-        
+              
       
         const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
         
