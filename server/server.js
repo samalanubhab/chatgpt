@@ -66,7 +66,7 @@ app.post('/', async (req, res) => {
             console.log("The fetched context outside is :-"+ context)
             let newPrompt;
             if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
-                newPrompt = `\n Context: ${context}\n Question: ${query}\n`;
+                newPrompt = `Answer using the below Context and if you donot know,say I donot know and contact KPMG lighthouse team for retraining.\n Context: ${context}\n Question: ${query}\n`;
             } else {
                 newPrompt =  `${query}\n`;
             }
