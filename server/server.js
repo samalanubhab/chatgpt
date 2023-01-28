@@ -37,8 +37,20 @@ app.post('/', async (req, res) => {
         fs.readFile('embeddings.json', (err, data) => {
           if (err) throw err;
           let jsonData = JSON.parse(data);
-          console.log(jsonData);
+         
         }); 
+        
+        let dotProducts = Object.keys(jsonData).map(function(key) {
+            return {key: key, dotProduct: Math.dot(jsonData[key], queryEmbedding)};
+        });
+        
+        dotProducts.sort(function(a, b) {
+            return b.dotProduct - a.dotProduct;
+        });
+
+        
+        let topKey = dotProducts[0].key;
+        console.log("The value of retrrieved key is " +topKey);
         
               
 
