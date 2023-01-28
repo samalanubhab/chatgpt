@@ -49,19 +49,11 @@ app.post('/', async (req, res) => {
                
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonSheet = xlsx.utils.sheet_to_json(sheet);
-        let context;
-        jsonSheet.forEach(function(row) {
-            if (row.number === topKey) {
-                context = row.context;
-                return;
-            }
-        });
+        const jsonSheet = xlsx.utils.sheet_to_json(sheet);        
+        let context = jsonSheet.find(row => row.number === topKey).context;
         console.log("The value of retrieved context is " +context);
 
-        const prompt1 = context
-              
-      
+        const prompt1 = context       
         const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
         
         console.log(newPrompt)
