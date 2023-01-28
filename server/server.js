@@ -46,27 +46,23 @@ app.post('/', async (req, res) => {
 
         let topKey; 
         topKey = dotProducts[0].key;
-        console.log("The value of retrieved key outside loop is " +topKey);
-
-        
+               
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);
-        var context;
+        let context;
         jsonSheet.forEach(function(row) {
             console.log("The value of looped row number is " +row.number);
             console.log("The value of looped topkey is " +topKey);
-            
+
             if (row.number === topKey) {
                 context = row.context;
+                break;
             }
         });
-        console.log("The value of retrieved context is " +context);
-        
-        
-              
+        console.log("The value of retrieved context is " +context);              
 
-        const prompt1 = `abc`
+        const prompt1 = context
               
       
         const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
