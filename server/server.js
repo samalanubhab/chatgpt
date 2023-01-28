@@ -61,6 +61,7 @@ app.post('/', async (req, res) => {
         }
         let newPrompt;
         if(query.toLowerCase().includes("nvidia") && query.toLowerCase().includes("2022")) {
+            console.log("The context retrieved is :- " + context)
             
             newPrompt = `Context: ${context}\n Question: ${query}\n`;
         } else {
