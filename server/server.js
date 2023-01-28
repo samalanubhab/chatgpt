@@ -61,7 +61,7 @@ app.post('/', async (req, res) => {
         }
         console.log("The context retrieved just after first if loop is :- " + context)
         let newPrompt;
-        if(query.toLowerCase().includes("nvidia") && query.toLowerCase().includes("2022")) {
+        if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
             console.log("The context retrieved inside second if loop is :- " + context)
             
             newPrompt = `Context: ${context}\n Question: ${query}\n`;
