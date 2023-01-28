@@ -47,7 +47,7 @@ app.post('/', async (req, res) => {
         let topKey; 
         topKey = dotProducts[0].key;
                
-        let workbook = xlsx.readFile('./document_embeddings.xlsx');
+        let workbook = xlsx.readFile('./document_metadata.xlsx');
         let sheet = workbook.Sheets[workbook.SheetNames[0]];
         let jsonSheet = xlsx.utils.sheet_to_json(sheet); 
         
