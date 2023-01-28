@@ -72,6 +72,7 @@ app.post('/', async (req, res) => {
             }
             return newPrompt;
         }
+        console.log("Retrieved top key is :"+topKey)
         let newPrompt = getContext(jsonSheet, topKey);
         
 
