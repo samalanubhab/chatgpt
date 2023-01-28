@@ -51,17 +51,13 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);
         let context;
-        for (let row of jsonSheet) {
-            console.log("The value of looped row number is " +row.number);
-            console.log("The value of looped topkey is " +topKey);
-
+        jsonSheet.forEach(function(row) {
             if (row.number === topKey) {
                 context = row.context;
-                break;
+                return;
             }
-        }
+        });
         console.log("The value of retrieved context is " +context);
-    
 
         const prompt1 = context
               
