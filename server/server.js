@@ -51,13 +51,16 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);        
         let context;
-        for (let i = 0; i < jsonSheet.length; i++) {
-            if (jsonSheet[i].number === topKey) {
-                context = jsonSheet[i].context;
-                break;
+        if(jsonSheet.length > 0){
+            for (let i = 0; i < jsonSheet.length; i++) {
+                if (Number(jsonSheet[i].number) === Number(topKey)) {
+                    context = jsonSheet[i].context;
+                    break;
+                }
             }
         }
-        console.log("The value of retrieved context is " +context);
+        console.log("The value of retrieved context is " + context);
+
 
         const prompt1 = context       
         const newPrompt = `Context: ${prompt1}\n Question: ${query}`;
