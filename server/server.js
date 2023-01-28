@@ -48,7 +48,8 @@ app.post('/', async (req, res) => {
                 return b.dotProduct - a.dotProduct;
             });
             
-            let topKey = dotProducts[0].key;
+            const topKey = dotProducts[0].key;
+            console.log("The value of retrieved key inside loop is " +topKey);
             
         });
         console.log("The value of retrieved key outside loop is " +topKey);
