@@ -34,23 +34,35 @@ app.post('/', async (req, res) => {
         });
         const queryEmbedding = output.data.data[0].embedding;               
         
+        let jsonData;
+        let topKey;
+        let context;
         fs.readFile('embeddings.json', (err, data) => {
-          if (err) throw err;
-          let jsonData = JSON.parse(data);
-         
-        }); 
-        
-        let dotProducts = Object.keys(jsonData).map(function(key) {
-            return {key: key, dotProduct: Math.dot(jsonData[key], queryEmbedding)};
-        });
-        
-        dotProducts.sort(function(a, b) {
-            return b.dotProduct - a.dotProduct;
+            if (err) throw err;
+            jsonData = JSON.parse(data);
+            let dotProducts = Object.keys(jsonData).map(function(key) {
+                    return {key: key, dotProduct: Math.dot(jsonData[key], queryEmbedding)};
+                });
+            
+            dotProducts.sort(function(a, b) {
+                return b.dotProduct - a.dotProduct;
+            });
+            
+            let topKey = dotProducts[0].key;
+            console.log("The value of retrrieved key is " +topKey);
         });
 
+        let workbook = xlsx.readFile('./document_embeddings.xlsx');
+        let sheet = workbook.Sheets[workbook.SheetNames[0]];
+        let jsonSheet = xlsx.utils.sheet_to_json(sheet);
+
+        jsonSheet.forEach(function(row) {
+            if (row.number === topKey) {
+                context = row.context;
+            }
+        });
+        console.log("The value of retrrieved context is " +context);
         
-        let topKey = dotProducts[0].key;
-        console.log("The value of retrrieved key is " +topKey);
         
               
 
