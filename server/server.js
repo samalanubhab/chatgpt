@@ -51,7 +51,7 @@ app.post('/', async (req, res) => {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);
         let context;
-        jsonSheet.forEach(function(row) {
+        for (let row of jsonSheet) {
             console.log("The value of looped row number is " +row.number);
             console.log("The value of looped topkey is " +topKey);
 
@@ -59,8 +59,9 @@ app.post('/', async (req, res) => {
                 context = row.context;
                 break;
             }
-        });
-        console.log("The value of retrieved context is " +context);              
+        }
+        console.log("The value of retrieved context is " +context);
+    
 
         const prompt1 = context
               
