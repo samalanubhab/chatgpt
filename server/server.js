@@ -41,7 +41,7 @@ app.post('/', async (req, res) => {
             if (err) throw err;
             jsonData = JSON.parse(data);
             let dotProducts = Object.keys(jsonData).map(function(key) {
-                    return {key: key, dotProduct: Math.dot(jsonData[key], queryEmbedding)};
+                    return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
                 });
             
             dotProducts.sort(function(a, b) {
