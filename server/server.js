@@ -34,7 +34,6 @@ app.post('/', async (req, res) => {
         });
         const queryEmbedding = output.data.data[0].embedding; 
         
-        let jsonData;
         const readFile = util.promisify(fs.readFile);
         const jsonData = await readFile('embeddings.json', 'utf8');
         let dotProducts = Object.keys(jsonData).map(function(key) {
