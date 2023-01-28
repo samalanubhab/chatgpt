@@ -50,7 +50,13 @@ app.post('/', async (req, res) => {
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);        
-        let context = jsonSheet.find(row => row.number === topKey).context;
+        let context;
+        for (let i = 0; i < jsonSheet.length; i++) {
+            if (jsonSheet[i].number === topKey) {
+                context = jsonSheet[i].context;
+                break;
+            }
+        }
         console.log("The value of retrieved context is " +context);
 
         const prompt1 = context       
