@@ -49,25 +49,31 @@ app.post('/', async (req, res) => {
                
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonSheet = xlsx.utils.sheet_to_json(sheet);        
+        const jsonSheet = xlsx.utils.sheet_to_json(sheet); 
+        
         let context;
-        if(jsonSheet.length > 0){
-            for (let i = 0; i < jsonSheet.length; i++) {
-                if (Number(jsonSheet[i].number) === Number(topKey)) {
-                    context = jsonSheet[i].context;
-                    break;
+        function getContext(jsonSheet, topKey, callback) {
+            if(jsonSheet.length > 0){
+                for (let i = 0; i < jsonSheet.length; i++) {
+                    if (Number(jsonSheet[i].number) === Number(topKey)) {
+                        context = jsonSheet[i].context;
+                        break;
+                    }
                 }
             }
+            callback(context);
         }
-        console.log("The context retrieved just after first if loop is :- " + context)
-        let newPrompt;
-        if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
-            console.log("The context retrieved inside second if loop is :- " + context)
-            
-            newPrompt = `Context: ${context}\n Question: ${query}\n`;
-        } else {
-            newPrompt =  `${query}\n`;
-        }              
+
+        getContext(jsonSheet, topKey, function(context) {
+            let newPrompt;
+            if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
+                newPrompt = `Context: ${context}\n Question: ${query}\n`;
+            } else {
+                newPrompt =  `${query}\n`;
+            }
+            return newPrompt;
+        });
+           
         
         console.log("The prompt passed is :- " + newPrompt)
         const response = await openai.createCompletion({
