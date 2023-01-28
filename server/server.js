@@ -35,18 +35,19 @@ app.post('/', async (req, res) => {
         });
         const queryEmbedding = output.data.data[0].embedding; 
         
-        const readFile = util.promisify(fs.readFile);
-        const jsonData = await readFile('embeddings.json', 'utf8');
+        const jsonData = JSON.parse(fs.readFileSync('embeddings.json', 'utf8'));
         let dotProducts = Object.keys(jsonData).map(function(key) {
-                        return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
-                    });
+                            return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
+                        });
 
         dotProducts.sort(function(a, b) {
             return b.dotProduct - a.dotProduct;
         });
 
+        let topKey; 
         topKey = dotProducts[0].key;
         console.log("The value of retrieved key outside loop is " +topKey);
+
         
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
