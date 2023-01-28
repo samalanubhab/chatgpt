@@ -36,7 +36,7 @@ app.post('/', async (req, res) => {
         
         let jsonData;
         let topKey;
-        let context;
+        
         fs.readFile('embeddings.json', (err, data) => {
             if (err) throw err;
             jsonData = JSON.parse(data);
@@ -49,19 +49,23 @@ app.post('/', async (req, res) => {
             });
             
             let topKey = dotProducts[0].key;
-            console.log("The value of retrrieved key is " +topKey);
+            
         });
+        console.log("The value of retrieved key outside loop is " +topKey);
 
-        let workbook = xlsx.readFile('./document_embeddings.xlsx');
-        let sheet = workbook.Sheets[workbook.SheetNames[0]];
-        let jsonSheet = xlsx.utils.sheet_to_json(sheet);
-
+        const workbook = xlsx.readFile('./document_embeddings.xlsx');
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonSheet = xlsx.utils.sheet_to_json(sheet);
+        let context;
         jsonSheet.forEach(function(row) {
+            console.log("The value of looped row number is " +row.number);
+            console.log("The value of looped topkey is " +topKey);
+            
             if (row.number === topKey) {
                 context = row.context;
             }
         });
-        console.log("The value of retrrieved context is " +context);
+        console.log("The value of retrieved context is " +context);
         
         
               
