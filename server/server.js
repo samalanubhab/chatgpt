@@ -59,15 +59,15 @@ app.post('/', async (req, res) => {
                 }
             }
         }
-        
+        let newPrompt;
         if(query.toLowerCase().includes("nvidia") && query.toLowerCase().includes("2022")) {
             
-            let newPrompt = `Context: ${context}\n Question: ${query}\n`;
+            newPrompt = `Context: ${context}\n Question: ${query}\n`;
         } else {
-            let newPrompt =  `${query}\n`;
+            newPrompt =  `${query}\n`;
         }              
         
-        console.log(""The prompt passed is :- " + newPrompt)
+        console.log("The prompt passed is :- " + newPrompt)
         const response = await openai.createCompletion({
 
             model: process.env.MODEL,
