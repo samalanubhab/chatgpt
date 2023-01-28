@@ -5,6 +5,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import xlsx from 'xlsx'
 import math from 'mathjs'
 import fs from 'fs'
+import util from 'util'
 
 dotenv.config()
 
