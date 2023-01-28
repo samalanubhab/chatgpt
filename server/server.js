@@ -33,9 +33,9 @@ app.post('/', async (req, res) => {
             model: process.env.EMBED_MODEL,
             input: `${query}`
         });
-        const queryEmbedding = output.data.data[0].embedding; 
+        let queryEmbedding = output.data.data[0].embedding; 
         
-        const jsonData = JSON.parse(fs.readFileSync('embeddings.json', 'utf8'));
+        let jsonData = JSON.parse(fs.readFileSync('embeddings.json', 'utf8'));
         let dotProducts = Object.keys(jsonData).map(function(key) {
                             return {key: key, dotProduct: math.dot(jsonData[key], queryEmbedding)};
                         });
@@ -47,9 +47,9 @@ app.post('/', async (req, res) => {
         let topKey; 
         topKey = dotProducts[0].key;
                
-        const workbook = xlsx.readFile('./document_embeddings.xlsx');
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonSheet = xlsx.utils.sheet_to_json(sheet); 
+        let workbook = xlsx.readFile('./document_embeddings.xlsx');
+        let sheet = workbook.Sheets[workbook.SheetNames[0]];
+        let jsonSheet = xlsx.utils.sheet_to_json(sheet); 
         
         
         function getContext(jsonSheet, topKey) {
