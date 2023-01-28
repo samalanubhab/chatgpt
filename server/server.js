@@ -52,7 +52,7 @@ app.post('/', async (req, res) => {
         const jsonSheet = xlsx.utils.sheet_to_json(sheet); 
         
         let context;
-        function getContext(jsonSheet, topKey, callback) {
+        function getContext(jsonSheet, topKey) {
             if(jsonSheet.length > 0){
                 for (let i = 0; i < jsonSheet.length; i++) {
                     if (Number(jsonSheet[i].number) === Number(topKey)) {
@@ -61,10 +61,6 @@ app.post('/', async (req, res) => {
                     }
                 }
             }
-            callback(context);
-        }
-
-        getContext(jsonSheet, topKey, function(context) {
             let newPrompt;
             if(query.toLowerCase().includes("nvidia") || query.toLowerCase().includes("2022")) {
                 newPrompt = `Context: ${context}\n Question: ${query}\n`;
@@ -72,8 +68,10 @@ app.post('/', async (req, res) => {
                 newPrompt =  `${query}\n`;
             }
             return newPrompt;
-        });
-           
+        }
+        let newPrompt = getContext(jsonSheet, topKey);
+        
+
         
         console.log("The prompt passed is :- " + newPrompt)
         const response = await openai.createCompletion({
