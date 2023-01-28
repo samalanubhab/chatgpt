@@ -35,7 +35,7 @@ app.post('/', async (req, res) => {
         const queryEmbedding = output.data.data[0].embedding;               
         
         let jsonData;
-        let topKey;
+        var topKey;
         
         fs.readFile('embeddings.json', (err, data) => {
             if (err) throw err;
@@ -48,16 +48,15 @@ app.post('/', async (req, res) => {
                 return b.dotProduct - a.dotProduct;
             });
             
-            const topKey = dotProducts[0].key;
-            console.log("The value of retrieved key inside loop is " +topKey);
-            
+            topKey = dotProducts[0].key;
+                        
         });
         console.log("The value of retrieved key outside loop is " +topKey);
 
         const workbook = xlsx.readFile('./document_embeddings.xlsx');
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonSheet = xlsx.utils.sheet_to_json(sheet);
-        let context;
+        var context;
         jsonSheet.forEach(function(row) {
             console.log("The value of looped row number is " +row.number);
             console.log("The value of looped topkey is " +topKey);
