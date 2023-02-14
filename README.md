@@ -1,3 +1,3 @@
-# Deploy Your Own ChatGPT AI Application
+# Deploy Your Own ChatGPT Q/A AI Application
 
 
