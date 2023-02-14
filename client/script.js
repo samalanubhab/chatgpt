@@ -86,7 +86,7 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://chatgptai-83tg.onrender.com', {
+    const response = await fetch('https:onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
